@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://c1hhblu341g4b"]
+
+[ext_resource type="Script" uid="uid://bow2464u80wy8" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="Texture2D" uid="uid://cd8nn1rcoe06j" path="res://assets/intro.png" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://1psfw2lel3wg" path="res://assets/fundo.png" id="2_h2yge"]
+
+[node name="Main" type="Control" unique_id=419373660]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ig7tw")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=23727650]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_h2yge")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=364886157]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="Titulo" type="Label" parent="VBoxContainer" unique_id=1603613012]
+layout_mode = 2
+text = "CAÇA À BOTIJA"
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="VBoxContainer" unique_id=1692872459]
+layout_mode = 2
+text = "Cave com cuidado..."
+horizontal_alignment = 1
+
+[node name="Grade" type="GridContainer" parent="VBoxContainer" unique_id=1731991532]
+layout_mode = 2
+
+[node name="Button_Reiniciar" type="Button" parent="VBoxContainer" unique_id=2141290272]
+layout_mode = 2
+text = "Cavar de novo"
+
+[node name="Intro" type="ColorRect" parent="." unique_id=185874350]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Intro" unique_id=216690895]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_0xm2m")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Intro" unique_id=413440553]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 32
+
+[node name="texto_intro" type="Label" parent="Intro/VBoxContainer" unique_id=173902847]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+text = "Dizem que no sertão, quando alguém morre com dinheiro enterrado, a alma da pessoa não descansa até que outro desenterre a BOTIJA. Está noite, uma alma apareceu no seu sonho e contou onde está o tesouro... mas outras almas guardam o terreno. Cave antes do galo cantar, e não desperte as outras almas "
+autowrap_mode = 2
+
+[node name="Button_comecar" type="Button" parent="Intro/VBoxContainer" unique_id=1202783992]
+layout_mode = 2
+text = "Começar a cavar"
+
+[connection signal="pressed" from="VBoxContainer/Button_Reiniciar" to="." method="_on_button_reiniciar_pressed"]
+[connection signal="pressed" from="Intro/VBoxContainer/Button_comecar" to="." method="_on_button_comecar_pressed"]
