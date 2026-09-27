@@ -8,6 +8,26 @@
 
 ---
 
+## Capturas de tela
+
+**Tela de introdução**, contando a lenda da botija:
+
+![Tela de introdução](screenshots/intro.png)
+
+**Início da partida:** o terreno ainda fechado, com os contadores de almas e de cavadas:
+
+![Início da partida](screenshots/inicio.png)
+
+**Vitória:** os brilhos dourados guiaram o jogador até a botija:
+
+![Vitória](screenshots/vitoria.png)
+
+**Derrota:** o galo cantou e o terreno foi revelado, mostrando onde estavam as almas e a botija:
+
+![Derrota](screenshots/derrota.png)
+
+---
+
 ## 1. A ideia
 
 O jogo é inspirado na **lenda das botijas**, muito presente no sertão nordestino: quando alguém morre deixando dinheiro enterrado em um pote de barro (a botija), sua alma não descansa até que outra pessoa desenterre o tesouro. A alma aparece em sonho para indicar o lugar.
@@ -35,7 +55,7 @@ No jogo, uma alma apareceu no sonho do jogador e contou onde está sua botija. M
 
 Ao cavar:
 
-- **Casa vazia:** mostra um **número** com a quantidade de almas nas casas vizinhas (as até 8 casas em volta). Se a botija estiver em uma casa vizinha, aparece também um **✨**.
+- **Casa vazia:** mostra um **número** com a quantidade de almas nas casas vizinhas (as até 8 casas em volta). Se a botija estiver em uma casa vizinha, aparece também um **brilho dourado**.
 - **Alma:** a alma desperta.
 - **Botija:** o jogador encontrou o tesouro.
 
@@ -54,7 +74,7 @@ Ao fim da partida, o jogo revela onde estavam todas as almas e a botija. O botã
 O jogador nunca deve cavar ao acaso. As decisões vêm de três elementos combinados:
 
 - **Números:** indicam o perigo em volta. Um "0" (casa vazia sem número) significa que todas as vizinhas são seguras; números altos pedem cuidado.
-- **Brilho ✨:** indica que a botija está em uma das casas vizinhas, permitindo ir cercando o tesouro.
+- **Brilho dourado:** indica que a botija está em uma das casas vizinhas, permitindo ir cercando o tesouro.
 - **Limite de cavadas:** com apenas 12 cavadas em 36 casas, não dá para cavar tudo. O jogador precisa seguir o brilho e usar os números para escolher o caminho mais seguro e mais curto.
 
 Esse terceiro elemento diferencia o jogo de um campo minado comum: além de evitar o perigo, é preciso **chegar a um objetivo com recursos limitados**.
@@ -103,6 +123,7 @@ Main (Control)                      ← nó raiz, tem o script main.gd
 | `terra_cavada.png` | Aparência das casas já cavadas |
 | `alma.png` | Ícone da alma penada (fundo transparente, clareada e com brilho para se destacar da terra) |
 | `botija.png` | Ícone da botija com moedas (fundo transparente) |
+| `brilho.png` | Brilho dourado que indica a botija numa casa vizinha (fundo transparente) |
 
 As imagens foram geradas com IA a partir de um guia de estilo comum (pixel art, noite de lua cheia, paleta azul e roxa com luz quente de candeeiro) e com instruções específicas de fidelidade regional: mandacarus em vez de cactos do deserto americano, vegetação de caatinga e serras baixas do sertão.
 
@@ -141,7 +162,7 @@ Guardam a situação da partida e podem ser usadas em qualquer função do scrip
 **`_ao_cavar(pos)`** — o coração do jogo, chamada a cada clique. Desativa o botão, gasta uma cavada e verifica o conteúdo da casa:
 - botija → vitória;
 - alma → mostra a alma e soma ao contador; na terceira, derrota;
-- vazia → conta as almas vizinhas, verifica se a botija está ao lado e mostra o número e o ✨.
+- vazia → conta as almas vizinhas, verifica se a botija está ao lado e mostra o número e o brilho.
 
 Ao final, verifica se as cavadas acabaram. Essa verificação fica **depois** de todo o `if/elif/else` por um motivo: se o jogador achar a botija justamente na última cavada, o `fim_de_jogo` já estará verdadeiro e ele vence, em vez de perder pelo amanhecer.
 
@@ -177,6 +198,7 @@ const IMG_ALMA := preload("res://assets/alma.png")
 const IMG_BOTIJA := preload("res://assets/botija.png")
 const IMG_TERRA_FECHADA := preload("res://assets/terra_fechada.png")
 const IMG_TERRA_CAVADA := preload("res://assets/terra_cavada.png")
+const IMG_BRILHO := preload("res://assets/brilho.png")
 
 # --- Configurações do jogo ---
 const LINHAS := 6
@@ -273,7 +295,7 @@ func _ao_cavar(pos: Vector2i):
 		if qtd > 0:
 			texto = str(qtd)
 		if botija in _vizinhos(pos):
-			texto += '✨'
+			botao.icon = IMG_BRILHO
 		botao.text = texto
 		_atualizar_status('Continue cavando...')
 
@@ -325,13 +347,18 @@ Para testar sem depender da sorte, foram usados temporariamente `print('Botija e
 | 3 | Cavar 3 almas | Derrota e revelação do terreno |
 | 4 | Gastar todas as cavadas em casas vazias | Derrota pelo galo |
 | 5 | Achar a botija na última cavada | **Vitória** (não derrota) |
-| 6 | Cavar ao lado da botija / de almas | Aparece ✨ / número correto de almas |
+| 6 | Cavar ao lado da botija / de almas | Aparece o brilho / número correto de almas |
 | 7 | "Cavar de novo" | Novo sorteio, contadores zerados |
 | 8 | "Começar a cavar" | A intro some e o jogo aparece |
 
 ---
 
 ## 9. Como executar
+
+O jogo está publicado no itch.io e pode ser jogado direto no navegador: https://joaolucasptaveira.itch.io/caa-botija-1-trabalho
+
+Para abrir o projeto:
+
 
 1. Abrir o Godot 4.7 e importar a pasta do projeto (arquivo `project.godot`).
 2. Pressionar **F5**. A cena principal é `main.tscn`.
